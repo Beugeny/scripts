@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class GameContext : MonoBehaviour {
+public class GameContext : MonoBehaviour {  
 
 	public Store store;
 	public GameObject[] prefabs;
