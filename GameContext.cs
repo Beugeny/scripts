@@ -4,7 +4,7 @@ using System;
 
 public class GameContext : MonoBehaviour {  
 
-	public Store store;
+  	public Store store;
 	public GameObject[] prefabs;
 	public Transform moveFinalTarget;
 
