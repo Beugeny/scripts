@@ -11,11 +11,11 @@ public class UnitController : MonoBehaviour {
 
 	void Start () {	
 		unitRenderer = GetComponent<SpriteRenderer> ();
-		moveFinalTarget = GameContext.inst.moveFinalTarget;
+		moveFinalTarget = GameContext.inst.teamMoveTarget[unitPoint.team];
 		rb = GetComponent<Rigidbody2D> ();
 	}
 
-	public void init(int unitId)
+	public void init(int unitId,int team)
 	{
 		unitPoint = new UnitPoint ();
 		unitPoint.id = unitId;
@@ -31,7 +31,7 @@ public class UnitController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		//Debug.Log("UnitController:: OnCollisionEnter2D="+coll.gameObject);
-		if (coll.gameObject.tag=="Finish") 
+        if (coll.gameObject.tag == "Finish") 
 		{
 			Debug.Log("UnitController:: moveFinalTarget destination complete");
 			GameContext.inst.store.carier.playerInfo.lifes--;

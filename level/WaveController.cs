@@ -7,17 +7,17 @@ using System;
 
 public class WaveController:MonoBehaviour
 {
-	private LevelController _levelControl;
+	private LevelEnemyWorker _enemyControl;
 	private SpawnWave _wave;
 
 	private int leftSpawnUnits=0;//Сколько юнитов еще осталось заспаунить
 
 
-	public void init(LevelController levelControl,SpawnWave wave)
+    public void init(LevelEnemyWorker enemyControl, SpawnWave wave)
 	{
 		//Debug.Log ("WaveController::init time="+wave.time);
 		_wave = wave;
-		_levelControl = levelControl;
+		_enemyControl = enemyControl;
 
 		leftSpawnUnits = 0;
 		for (int i=0; i<_wave.units.Length; i++) 
@@ -75,13 +75,13 @@ public class WaveController:MonoBehaviour
 		{
 			leftSpawnUnits--;
 			//Debug.Log("WaveController:spawnUnit id="+unit.unitId+" prefabName="+unit.unitInfo.prefabName);
-			Transform pos=_levelControl.getRandomSpawnPosition();
+			Transform pos=_enemyControl.getRandomSpawnPosition();
 			GameObject instant=GameContext.inst.getPrefabByName(unit.unitInfo.prefabName);
 
 			Vector3 spawpPos=new Vector3(pos.position.x+UnityEngine.Random.Range(-0.1f,0.1f),pos.position.y+UnityEngine.Random.Range(-0.1f,0.1f),pos.position.z);
 			GameObject newUnit = (GameObject)Instantiate(instant,spawpPos,Quaternion.identity);
 			UnitController unitControl= newUnit.GetComponent<UnitController>();
-			unitControl.init(unit.unitId);
+			unitControl.init(unit.unitId,Teams.BAD);
 		}
 	}
 }
