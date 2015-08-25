@@ -7,6 +7,7 @@ public class LevelWorker : MonoBehaviour {
     private LevelTeamWorker teamWorker;
     private LevelEnemyWorker enemyWorker;
 
+
     public void Start()
     {
         init(1);

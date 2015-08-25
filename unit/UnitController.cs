@@ -11,12 +11,12 @@ public class UnitController : MonoBehaviour {
 
 	void Start () {	
 		unitRenderer = GetComponent<SpriteRenderer> ();
-		moveFinalTarget = GameContext.inst.teamMoveTarget[unitPoint.team];
 		rb = GetComponent<Rigidbody2D> ();
 	}
 
-	public void init(int unitId,int team)
+    public void init(int unitId, int team, Transform moveFinalTarget)
 	{
+        this.moveFinalTarget = moveFinalTarget;
 		unitPoint = new UnitPoint ();
 		unitPoint.id = unitId;
 		unitPoint.currentLife = unitPoint.info().life;
@@ -27,11 +27,12 @@ public class UnitController : MonoBehaviour {
 		Vector3 delta = (moveFinalTarget.transform.position - transform.position);
 		float direction = Mathf.Abs (delta.x) / delta.x;
 		rb.velocity = new Vector2 (unitPoint.info().moveSpeed*direction, 0);
+        //Debug.Log("UnitController::" + moveFinalTarget.transform.position + " " + transform.position);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		//Debug.Log("UnitController:: OnCollisionEnter2D="+coll.gameObject);
-        if (coll.gameObject.tag == "Finish") 
+        if (coll.gameObject == moveFinalTarget) 
 		{
 			Debug.Log("UnitController:: moveFinalTarget destination complete");
 			GameContext.inst.store.carier.playerInfo.lifes--;

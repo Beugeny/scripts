@@ -9,13 +9,15 @@ public class WaveController:MonoBehaviour
 {
 	private LevelEnemyWorker _enemyControl;
 	private SpawnWave _wave;
+    private Transform moveFinalTarget;
 
 	private int leftSpawnUnits=0;//Сколько юнитов еще осталось заспаунить
 
 
-    public void init(LevelEnemyWorker enemyControl, SpawnWave wave)
+    public void init(LevelEnemyWorker enemyControl, SpawnWave wave, Transform moveFinalTarget)
 	{
 		//Debug.Log ("WaveController::init time="+wave.time);
+        this.moveFinalTarget = moveFinalTarget;
 		_wave = wave;
 		_enemyControl = enemyControl;
 
@@ -81,7 +83,7 @@ public class WaveController:MonoBehaviour
 			Vector3 spawpPos=new Vector3(pos.position.x+UnityEngine.Random.Range(-0.1f,0.1f),pos.position.y+UnityEngine.Random.Range(-0.1f,0.1f),pos.position.z);
 			GameObject newUnit = (GameObject)Instantiate(instant,spawpPos,Quaternion.identity);
 			UnitController unitControl= newUnit.GetComponent<UnitController>();
-			unitControl.init(unit.unitId,Teams.BAD);
+            unitControl.init(unit.unitId, Teams.BAD, moveFinalTarget);
 		}
 	}
 }

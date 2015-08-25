@@ -7,6 +7,7 @@ public class LevelEnemyWorker : MonoBehaviour {
     private LeveInfo level;
     private LevelWorker _levelWorker;
     private WaveController[] waves;
+    public Transform moveFinalTarget;
 
 
     public void init(LevelWorker levelController,int id)
@@ -29,7 +30,7 @@ public class LevelEnemyWorker : MonoBehaviour {
         {
             WaveController wave = gameObject.AddComponent<WaveController>();
             waves.SetValue(wave, i);
-            wave.init(this, level.spawn.waves[i]);
+            wave.init(this, level.spawn.waves[i], moveFinalTarget);
         }
     }
 

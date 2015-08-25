@@ -15,10 +15,7 @@ public class Store {
 
 		//<<TEST DATA
 
-		//PLAYER
-		playerInfo = new PlayerInfo ();
-		playerInfo.lifes = 3;
-		carier.playerInfo = playerInfo;
+		
 
 		//UNITS
 		units=new UnitInfo[3];
@@ -45,20 +42,20 @@ public class Store {
 		
 		SpawnWave wave1 = new SpawnWave ();
 		wave1.time = 0f;
-		wave1.units=new SpawnUnit[2];
+		wave1.units=new SpawnUnit[1];
 
 		SpawnUnit spawnUnit = new SpawnUnit ();
 		spawnUnit.unitId = 0;
 		spawnUnit.time = 1f;
 		spawnUnit.count = 3;
 
-		SpawnUnit spawnUnit2 = new SpawnUnit ();
+		/*SpawnUnit spawnUnit2 = new SpawnUnit ();
 		spawnUnit2.unitId = 0;
 		spawnUnit2.time = 3;
-		spawnUnit2.count = 1;
+		spawnUnit2.count = 1;*/
 
-		wave1.units.SetValue (spawnUnit2,0);
-		wave1.units.SetValue (spawnUnit,1);
+		wave1.units.SetValue (spawnUnit,0);
+		//wave1.units.SetValue (spawnUnit,1);
 
 		spawner.waves.SetValue (wave1, 0);
 		//spawner.waves.SetValue (wave1, 1);
@@ -83,8 +80,16 @@ public class Store {
 		level.id = 1;
 		carier.levelsProgress.SetValue (level, 1);
 
-
-
+        //PLAYER
+        playerInfo = new PlayerInfo();
+        playerInfo.lifes = 3;
+        playerInfo.spawner.spawners = new TeamSpawner[1];
+        TeamSpawner teamSpawner = new TeamSpawner();
+        teamSpawner.id = 0;
+        teamSpawner.unitId = 0;
+        teamSpawner.time = 2;
+        playerInfo.spawner.spawners.SetValue(teamSpawner, 0);
+        carier.playerInfo = playerInfo;
 
 		//TEST DATA>>
 
@@ -112,4 +117,5 @@ public class Store {
 		}
 		return null;
 	}
+    
 }
