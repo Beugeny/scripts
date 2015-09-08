@@ -8,7 +8,7 @@ public class UnitPoint
 	public int currentLife;//жизнь юнита
 	public int team;
 
-	private UnitInfo _info;
+    private UnitInfo _info;
 
 	public UnitInfo info()
 	{
