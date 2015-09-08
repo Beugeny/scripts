@@ -13,8 +13,11 @@ public class CarierController : MonoBehaviour {
 	
 	void onKillUnit (UnitPoint unitInfo)
 	{
-		changeCash (unitInfo.info().killCash);
-		changeScore (unitInfo.info().killScore);
+        if(unitInfo.team== Teams.BAD)
+        {
+            changeCash(unitInfo.info().killCash);
+            changeScore(unitInfo.info().killScore);
+        }		
 	}
 
 	void changeCash(int changeValue)

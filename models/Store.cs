@@ -31,7 +31,7 @@ public class Store {
 		unit1.prefabName = "SimpleUnit";
 		unit1.id = 0;
 		unit1.armor = 1;
-		unit1.moveSpeed = 1f;
+		unit1.moveSpeed = 2f;
 		unit1.weapon = weapon1;
 		unit1.killCash = 1;
 		unit1.killScore = 2;
@@ -62,7 +62,7 @@ public class Store {
 		SpawnUnit spawnUnit = new SpawnUnit ();
 		spawnUnit.unitId = 0;
 		spawnUnit.time = 1f;
-		spawnUnit.count = 2;
+		spawnUnit.count = 4;
 
 		/*SpawnUnit spawnUnit2 = new SpawnUnit ();
 		spawnUnit2.unitId = 0;
@@ -101,7 +101,7 @@ public class Store {
         TeamSpawner teamSpawner = new TeamSpawner();
         teamSpawner.id = 0;
         teamSpawner.unitId = 1;
-        teamSpawner.time = 3;
+        teamSpawner.time = 0.5f;
         playerInfo.spawner.spawners.SetValue(teamSpawner, 0);
         carier.playerInfo = playerInfo;
 

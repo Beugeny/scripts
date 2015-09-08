@@ -104,9 +104,10 @@ public class UnitController : MonoBehaviour
     {
         if (unitPoint == null) return;
         Vector3 delta = (target.position - transform.position).normalized;
-        float angle = Mathf.Atan2(delta.y, delta.x);
+        float angle = Mathf.Atan2(delta.y, delta.x);        
         float cos = Mathf.Cos(angle);
         float sin = Mathf.Sin(angle);
+        //Debug.Log("cos=" + cos+"  sin=" + sin);
         rb.velocity = new Vector2(unitPoint.info().moveSpeed * cos, unitPoint.info().moveSpeed  * sin);
     }
 
@@ -144,7 +145,7 @@ public class UnitController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D coll)
     {
         //Debug.Log("UnitController:: OnCollisionEnter2D="+coll.gameObject);
-        if (coll.gameObject == moveFinalTarget)
+        if (coll.gameObject.transform == moveFinalTarget)
         {
             Debug.Log("UnitController:: moveFinalTarget destination complete");
             GameContext.inst.store.carier.playerInfo.lifes--;

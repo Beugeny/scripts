@@ -4,7 +4,7 @@ using System.Collections;
 public class TeamSpawner 
 {
     public int unitId;
-    public int time;
+    public float time;
     public int id;
 
     
