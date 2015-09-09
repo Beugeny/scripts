@@ -18,12 +18,12 @@ public class Store {
         
 		WeaponInfo weapon1 = new WeaponInfo ();
 		weapon1.force = 3;
-		weapon1.radius = 3f;
+		weapon1.radius =1f;
 		weapon1.reloadTime = 1f;
 
         WeaponInfo weapon2 = new WeaponInfo();
         weapon2.force = 2;
-        weapon2.radius = 2f;
+        weapon2.radius = 1f;
         weapon2.reloadTime = 4f;
 
         UnitInfo unit1 = new UnitInfo ();
@@ -35,18 +35,18 @@ public class Store {
 		unit1.weapon = weapon1;
 		unit1.killCash = 1;
 		unit1.killScore = 2;
-        unit1.viewRadius = 5;
+        unit1.viewRadius = 4;
 
         UnitInfo unit2 = new UnitInfo();
         unit2.life = 5;
-        unit2.prefabName = "SimpleUnit";
+        unit2.prefabName = "FriendlyUnit";
         unit2.id = 1;
         unit2.armor = 1;
         unit2.moveSpeed = 1.1f;
         unit2.weapon = weapon2;
         unit2.killCash = 1;
         unit2.killScore = 2;
-        unit2.viewRadius = 6;
+        unit2.viewRadius = 4;
 
         units.Add(unit1);
         units.Add(unit2);
@@ -62,7 +62,7 @@ public class Store {
 		SpawnUnit spawnUnit = new SpawnUnit ();
 		spawnUnit.unitId = 0;
 		spawnUnit.time = 1f;
-		spawnUnit.count = 4;
+		spawnUnit.count = 5;
 
 		/*SpawnUnit spawnUnit2 = new SpawnUnit ();
 		spawnUnit2.unitId = 0;
@@ -103,6 +103,11 @@ public class Store {
         teamSpawner.unitId = 1;
         teamSpawner.time = 0.5f;
         playerInfo.spawner.spawners.SetValue(teamSpawner, 0);
+
+
+        playerInfo.weaponInfo = new PlayerWeaponInfo();
+        playerInfo.weaponInfo.force = 4;
+
         carier.playerInfo = playerInfo;
 
 		//TEST DATA>>

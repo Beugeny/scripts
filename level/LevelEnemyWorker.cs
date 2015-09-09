@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class LevelEnemyWorker : MonoBehaviour {
+public class LevelEnemyWorker : MonoBehaviour
+{
 
     public Transform[] spawnPositions;//позиции для спауна .юниотв
     private LeveInfo level;
     private LevelWorker _levelWorker;
     private WaveController[] waves;
     public Transform moveFinalTarget;
+    private bool destroyed = false;
 
 
-    public void init(LevelWorker levelController,int id)
+    public void init(LevelWorker levelController, int id)
     {
         _levelWorker = levelController;
         EventControl.killUnit += onUnitKilled;
         EventControl.lifeChanged += onLifeChanged;
-        
+
         level = GameContext.inst.store.getLevelInfo(id);
         if (level == null)
         {
@@ -34,16 +37,29 @@ public class LevelEnemyWorker : MonoBehaviour {
         }
     }
 
-
-   public Transform getRandomSpawnPosition()
+    public void destroy()
     {
-        int index = Random.Range(0, spawnPositions.Length);
+        destroyed = true;
+        EventControl.killUnit -= onUnitKilled;
+        EventControl.lifeChanged -= onLifeChanged;
+
+        for (int i = 0; i < waves.Length; i++)
+        {
+            WaveController wave = waves[i];
+            if (wave) wave.destroy();
+        }
+    }
+
+    public Transform getRandomSpawnPosition()
+    {
+        int index = UnityEngine.Random.Range(0, spawnPositions.Length);
         //Debug.Log ("spawn index="+index+" len="+spawnPositions.Length);
         return spawnPositions[index];
     }
 
     void onUnitKilled(UnitPoint unitInfo)
     {
+        if (destroyed) return;
         if (!hasActiveWaves())
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -67,6 +83,7 @@ public class LevelEnemyWorker : MonoBehaviour {
 
     void onLifeChanged()
     {
+        if (destroyed) return;
         if (GameContext.inst.store.playerInfo.lifes <= 0)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -89,5 +106,5 @@ public class LevelEnemyWorker : MonoBehaviour {
         }
         return false;
     }
-	
+
 }

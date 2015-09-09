@@ -70,7 +70,13 @@ public class WaveController:MonoBehaviour
 		spawnUnit(unit);
 	}
 
-	private void spawnUnit (SpawnUnit unit)
+    internal void destroy()
+    {
+        StopCoroutine("initUnitSpawn");
+        StopCoroutine("initSpawnWave");
+    }
+
+    private void spawnUnit (SpawnUnit unit)
 	{
 		//Debug.Log("WaveController:spawnUnits count="+unit.count);
 		for(int i=0;i<unit.count;i++)

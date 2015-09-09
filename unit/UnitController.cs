@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour
 
     public UnitPoint unitPoint;
     private Transform moveFinalTarget;
+    private float moveFinalY;
     private Rigidbody2D rb;
     private SpriteRenderer unitRenderer;
 
@@ -21,6 +22,8 @@ public class UnitController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine("checkTarget");
+
+        moveFinalY =UnityEngine.Random.Range(-moveFinalTarget.transform.localScale.y / 2, moveFinalTarget.transform.localScale.y/2);
     }
 
     private IEnumerator checkTarget()
@@ -31,7 +34,7 @@ public class UnitController : MonoBehaviour
             {
                 _target = findTargetUnit();
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }    
     }
     /*
@@ -50,13 +53,21 @@ public class UnitController : MonoBehaviour
             }
         }
 
-
+        List<UnitController> res = new List<UnitController>();
         for (int i = 0; i < tmpTargets.Count; i++)
         {
             if (inMoveRange(tmpTargets[i]) == true)
             {
-                return tmpTargets[i];
+                res.Add(tmpTargets[i]);
             }
+        }
+        if (res.Count == 1)
+        {
+            return res[0];
+        }
+        if(res.Count>0)
+        {
+            return res[(int)Mathf.Round(UnityEngine.Random.Range(0, res.Count))];
         }
         return null;
     }
@@ -97,14 +108,16 @@ public class UnitController : MonoBehaviour
         }
         else
         {
-            moveTo(moveFinalTarget.transform);
+            moveTo(moveFinalTarget.transform,moveFinalY);
         }
     }
-    private void moveTo(Transform target)
+    private void moveTo(Transform target,float yshift=0)
     {
         if (unitPoint == null) return;
-        Vector3 delta = (target.position - transform.position).normalized;
-        float angle = Mathf.Atan2(delta.y, delta.x);        
+        Vector3 res = (target.position - transform.position);
+        res.y += yshift;
+        res = res.normalized;
+        float angle = Mathf.Atan2(res.y, res.x);        
         float cos = Mathf.Cos(angle);
         float sin = Mathf.Sin(angle);
         //Debug.Log("cos=" + cos+"  sin=" + sin);
@@ -148,12 +161,20 @@ public class UnitController : MonoBehaviour
         if (coll.gameObject.transform == moveFinalTarget)
         {
             Debug.Log("UnitController:: moveFinalTarget destination complete");
-            GameContext.inst.store.carier.playerInfo.lifes--;
-            destroyUnit();
-            EventControl.onLifeChanged();
+            if(unitPoint.team==Teams.BAD)
+            {
+                GameContext.inst.store.carier.playerInfo.lifes--;
+                destroyUnit();
+                EventControl.onLifeChanged();
+            }
+            else
+            {
+                destroyUnit();
+            }
+           
         }
     }
-    void destroyUnit()
+    public void destroyUnit()
     {
         CancelInvoke();
         unitPoint.currentLife = 0;
